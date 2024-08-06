@@ -49,6 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
 
+    # 테스트
     steps:
       - name: SSH to EC2 and deploy admin-api
         uses: appleboy/ssh-action@master
