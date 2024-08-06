@@ -1,5 +1,5 @@
 # Base image
-FROM openjdk:17-jre-slim
+FROM openjdk:17-jdk-slim
 
 # Set the working directory
 WORKDIR /app
@@ -11,4 +11,4 @@ COPY build/libs/sycls-user-api-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-jar", "app.jar"]
