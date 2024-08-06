@@ -1,0 +1,79 @@
+name: CI/CD Pipeline Admin
+
+on:
+  push:
+    branches:
+      - "dev"
+
+jobs:
+  build:
+    run-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew clean build
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+
+      # 도커 허브 로그인
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build and push admin
+        uses: docker/build-push-action@v4
+        with:
+          context: ./sycls-admin-api
+          file: ./sycls-admin-api/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sycls-admin-api:latest
+
+#  deploy-admin:
+#    runs-on: ubuntu-latest
+#    needs: build
+#
+#    steps:
+#      - name: SSH to EC2 and deploy admin-api
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.EC2_HOST_ADMIN }}
+#          username: ${{ secrets.EC2_USER }}
+#          key: ${{ secrets.EC2_KEY }}
+#          envs:
+#            DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+#            AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}}
+#            AWS_BASE_URL: ${{secrets.AWS_BASE_URL}}
+#            AWS_BUCKET_NAME: ${{secrets.AWS_BUCKET_NAME}}
+#            AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
+#            DEV_DB_PASSWORD: ${{secrets.DEV_DB_PASSWORD}}
+#            DEV_DB_URL: ${{secrets.DEV_DB_URL}}
+#            DEV_DB_NAME: ${{secrets.DEV_DB_NAME}}
+#            DEV_DB_USER: ${{secrets.DEV_DB_USER}}
+#            JWT_SECRET_KEY: ${{secrets.JWT_SECRET_KEY}}
+#            NAVER_EMAIL: ${{secrets.NAVER_EMAIL}}
+#            NAVER_EMAIL_PASSWORD: ${{secrets.NAVER_EMAIL_PASSWORD}}
+#            TOSS_CLIENT_KEY: ${{secrets.TOSS_CLIENT_KEY}}
+#            TOSS_SECRET_KEY: ${{secrets.TOSS_SECRET_KEY}}
+#            MAIL_HOST: ${{secrets.MAIL_HOST}}
+#            MAIL_PORT: ${{secrets.MAIL_PORT}}
+#            SERVER_PORT: 8080
+#          script: |
+#            docker pull ${{ secrets.DOCKER_USERNAME }}/sycls-admin-api:latest
+#            docker stack deploy -c docker-compose-admin.yml admin_stack
