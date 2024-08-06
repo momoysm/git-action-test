@@ -1,0 +1,14 @@
+# Base image
+FROM openjdk:17-jre-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the JAR file
+COPY build/libs/sycls-admin-api-0.0.1-SNAPSHOT.jar app.jar
+
+# Expose the port
+EXPOSE 8081
+
+# Run the application
+ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-jar", "app.jar"]
