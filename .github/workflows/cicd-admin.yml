@@ -3,7 +3,7 @@ name: CI/CD Pipeline Admin
 on:
   push:
     branches:
-      - "dev"
+      - "feat/git-action-teset"
 
 jobs:
   build:
