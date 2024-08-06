@@ -76,5 +76,5 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            docker pull ${{ secrets.DOCKER_USERNAME }}/sycls-admin-api:latest
-            docker stack deploy -c docker-compose-admin.yml admin_stack
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/sycls-admin-api:latest
+            sudo docker stack deploy -c docker-compose-admin.yml admin_stack
