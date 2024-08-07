@@ -63,22 +63,23 @@ jobs:
               sudo docker rm $CONTAINER_ID
             fi
             sudo docker pull --platform linux/amd64 ${{ secrets.DOCKER_USERNAME }}/sycls-admin-api:latest
-            sudo docker run -d -p 8080:8080\
-            -e DOCKER_USERNAME=${{secrets.DOCKER_USERNAME}}\
-            -e AWS_ACCESS_KEY=${{secrets.AWS_ACCESS_KEY}}\
-            -e AWS_SECRET_KEY=${{secrets.AWS_SECRET_KEY}}\
-            -e AWS_BASE_URL=${{secrets.AWS_BASE_URL}}\
-            -e AWS_BUCKET_NAME=${{secrets.AWS_BUCKET_NAME}}\
-            -e DEV_DB_PASSWORD=${{secrets.DEV_DB_PASSWORD}}\
-            -e DEV_DB_URL=${{secrets.DEV_DB_URL}}\
-            -e DEV_DB_NAME=${{secrets.DEV_DB_NAME}}\
-            -e DEV_DB_USER=${{secrets.DEV_DB_USER}}\
-            -e JWT_SECRET_KEY=${{secrets.JWT_SECRET_KEY}}\
-            -e NAVER_EMAIL=${{secrets.NAVER_EMAIL}}\
-            -e NAVER_EMAIL_PASSWORD=${{secrets.NAVER_EMAIL_PASSWORD}}\
-            -e TOSS_CLIENT_KEY=${{secrets.TOSS_CLIENT_KEY}}\
-            -e TOSS_SECRET_KEY=${{secrets.TOSS_SECRET_KEY}}\
-            -e MAIL_HOST=${{secrets.MAIL_HOST}}\
-            -e MAIL_PORT=${{secrets.MAIL_PORT}}\
-            -e SERVER_PORT=8080\
-            ${{secrets.DOCKER_USERNAME}}/sycls-admin-api:latest
+            sudo docker image prune -a --force --filter "until=24h"
+            sudo docker run -d -p 8080:8080 \
+              -e DOCKER_USERNAME=${{secrets.DOCKER_USERNAME}} \
+              -e AWS_ACCESS_KEY=${{secrets.AWS_ACCESS_KEY}} \
+              -e AWS_SECRET_KEY=${{secrets.AWS_SECRET_KEY}} \
+              -e AWS_BASE_URL=${{secrets.AWS_BASE_URL}} \
+              -e AWS_BUCKET_NAME=${{secrets.AWS_BUCKET_NAME}} \
+              -e DEV_DB_PASSWORD=${{secrets.DEV_DB_PASSWORD}} \
+              -e DEV_DB_URL=${{secrets.DEV_DB_URL}} \
+              -e DEV_DB_NAME=${{secrets.DEV_DB_NAME}} \
+              -e DEV_DB_USER=${{secrets.DEV_DB_USER}} \
+              -e JWT_SECRET_KEY=${{secrets.JWT_SECRET_KEY}} \
+              -e NAVER_EMAIL=${{secrets.NAVER_EMAIL}} \
+              -e NAVER_EMAIL_PASSWORD=${{secrets.NAVER_EMAIL_PASSWORD}} \
+              -e TOSS_CLIENT_KEY=${{secrets.TOSS_CLIENT_KEY}} \
+              -e TOSS_SECRET_KEY=${{secrets.TOSS_SECRET_KEY}} \
+              -e MAIL_HOST=${{secrets.MAIL_HOST}} \
+              -e MAIL_PORT=${{secrets.MAIL_PORT}} \
+              -e SERVER_PORT=8080 \
+              ${{secrets.DOCKER_USERNAME}}/sycls-admin-api:latest
