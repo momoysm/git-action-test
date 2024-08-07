@@ -61,7 +61,7 @@ jobs:
           source: |
             docker-compose-admin.yml
             .env
-          target: /Users/seongmo-yoon/IdeaProjects/git-action-test
+          target: ~/
 
       - name: SSH to EC2 and deploy admin-api
         uses: appleboy/ssh-action@master
