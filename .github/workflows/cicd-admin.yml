@@ -49,35 +49,46 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Copy files to EC2
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.EC2_HOST_ADMIN }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_KEY }}
-          source: .env
-          target: /home/ubuntu
+      - name: Generate Environment Variables File for Production
+        run: |
+          echo "DOCKER_USERNAME=$DOCKER_USERNAME" >> .env.dev
+          echo "AWS_ACCESS_KEY=$AWS_ACCESS_KEY" >> .env.dev
+          echo "AWS_SECRET_KEY=$AWS_SECRET_KEY" >> .env.dev
+          echo "AWS_BASE_URL=$AWS_BASE_URL" >> .env.dev
+          echo "AWS_BUCKET_NAME=$AWS_BUCKET_NAME" >> .env.dev
+          echo "DEV_DB_PASSWORD=$DEV_DB_PASSWORD" >> .env.dev
+          echo "DEV_DB_URL=$DEV_DB_URL" >> .env.dev
+          echo "DEV_DB_NAME=$DEV_DB_NAME" >> .env.dev
+          echo "DEV_DB_USER=$DEV_DB_USER" >> .env.dev
+          echo "JWT_SECRET_KEY=$JWT_SECRET_KEY" >> .env.dev
+          echo "NAVER_EMAIL=$NAVER_EMAIL" >> .env.dev
+          echo "NAVER_EMAIL_PASSWORD=$NAVER_EMAIL_PASSWORD" >> .env.dev
+          echo "TOSS_CLIENT_KEY=$TOSS_CLIENT_KEY" >> .env.dev
+          echo "TOSS_SECRET_KEY=$TOSS_SECRET_KEY" >> .env.dev
+          echo "MAIL_HOST=$MAIL_HOST" >> .env.dev
+          echo "MAIL_PORT=$MAIL_PORT" >> .env.dev
+          echo "SERVER_PORT: 8080" >> .env.dev
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+          AWS_BASE_URL: ${{ secrets.AWS_BASE_URL }}
+          AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
+          DEV_DB_PASSWORD: ${{ secrets.DEV_DB_PASSWORD }}
+          DEV_DB_URL: ${{ secrets.DEV_DB_URL }}
+          DEV_DB_NAME: ${{ secrets.DEV_DB_NAME }}
+          DEV_DB_USER: ${{ secrets.DEV_DB_USER }}
+          JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+          NAVER_EMAIL: ${{ secrets.NAVER_EMAIL }}
+          NAVER_EMAIL_PASSWORD: ${{ secrets.NAVER_EMAIL_PASSWORD }}
+          TOSS_CLIENT_KEY: ${{ secrets.TOSS_CLIENT_KEY }}
+          TOSS_SECRET_KEY: ${{ secrets.TOSS_SECRET_KEY }}
+          MAIL_HOST: ${{ secrets.MAIL_HOST }}
+          MAIL_PORT: ${{ secrets.MAIL_PORT }}
+          SERVER_PORT: 8080
 
       - name: SSH to EC2 and deploy admin-api
         uses: appleboy/ssh-action@master
-#        env:
-#          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-#          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
-#          AWS_BASE_URL: ${{ secrets.AWS_BASE_URL }}
-#          AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
-#          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-#          DEV_DB_PASSWORD: ${{ secrets.DEV_DB_PASSWORD }}
-#          DEV_DB_URL: ${{ secrets.DEV_DB_URL }}
-#          DEV_DB_NAME: ${{ secrets.DEV_DB_NAME }}
-#          DEV_DB_USER: ${{ secrets.DEV_DB_USER }}
-#          JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
-#          NAVER_EMAIL: ${{ secrets.NAVER_EMAIL }}
-#          NAVER_EMAIL_PASSWORD: ${{ secrets.NAVER_EMAIL_PASSWORD }}
-#          TOSS_CLIENT_KEY: ${{ secrets.TOSS_CLIENT_KEY }}
-#          TOSS_SECRET_KEY: ${{ secrets.TOSS_SECRET_KEY }}
-#          MAIL_HOST: ${{ secrets.MAIL_HOST }}
-#          MAIL_PORT: ${{ secrets.MAIL_PORT }}
-#          SERVER_PORT: 8080
         with:
           host: ${{ secrets.EC2_HOST_ADMIN }}
           username: ${{ secrets.EC2_USER }}

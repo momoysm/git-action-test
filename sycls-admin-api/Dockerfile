@@ -8,7 +8,7 @@ WORKDIR /app
 COPY build/libs/sycls-admin-api-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose the port
-EXPOSE 8081
+EXPOSE 8080
 
 # Run the application
 ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-jar", "app.jar"]
