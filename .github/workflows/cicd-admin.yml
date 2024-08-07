@@ -95,6 +95,6 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/sycls-admin-api:latest
-            sudo docker run -d --${{secrets.DOCKER_USERNAME}}/sycls-admin-api:latest
-            docker run -d -p 8080:8080 --env-file .env ${{ secrets.DOCKER_USERNAME }}/sycls-admin-api:latest
+#            sudo docker run -d --${{secrets.DOCKER_USERNAME}}/sycls-admin-api:latest
+            sudo docker run -d -p 8080:8080 --env-file .env ${{ secrets.DOCKER_USERNAME }}/sycls-admin-api:latest
             
