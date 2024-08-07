@@ -48,9 +48,21 @@ jobs:
   deploy-admin:
     runs-on: ubuntu-latest
     needs: build
-
-    # 테스트#
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Copy files to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST_ADMIN }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          source: |
+            docker-compose-admin.yml
+            .env
+          target: /Users/seongmo-yoon/IdeaProjects/git-action-test
+
       - name: SSH to EC2 and deploy admin-api
         uses: appleboy/ssh-action@master
 #        env:
@@ -76,5 +88,5 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/sycls-admin-api:latest
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/-syclsadmin-api:latest
             sudo docker stack deploy -c docker-compose-admin.yml admin_stack
