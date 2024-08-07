@@ -62,5 +62,5 @@ jobs:
               sudo docker rm $CONTAINER_ID
             fi
             sudo docker pull --platform linux/amd64 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}:latest
-            sudo docker run -d --env-file test.env -p 8080:8080 ${{secrets.DOCKER_USERNAME}}/${{ secrets.DOCKER_IMAGE }}:latest
+            sudo docker run -d --env-file test.env -p 8081:8081 ${{secrets.DOCKER_USERNAME}}/${{ secrets.DOCKER_IMAGE }}:latest
 
