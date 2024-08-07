@@ -43,7 +43,7 @@ jobs:
           context: ./sycls-admin-api
           file: ./sycls-admin-api/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/sycls-admin-api:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}:latest
 
   deploy-admin:
     runs-on: ubuntu-latest
@@ -63,7 +63,7 @@ jobs:
               sudo docker stop $CONTAINER_ID
               sudo docker rm $CONTAINER_ID
             fi
-            sudo docker pull --platform linux/amd64 ${{ secrets.DOCKER_USERNAME }}/sycls-admin-api:latest
+            sudo docker pull --platform linux/amd64 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}:latest
             sudo docker run -d -p 8080:8080 \
               -e DOCKER_USERNAME=${{secrets.DOCKER_USERNAME}} \
               -e AWS_ACCESS_KEY=${{secrets.AWS_ACCESS_KEY}} \
@@ -82,4 +82,4 @@ jobs:
               -e MAIL_HOST=${{secrets.MAIL_HOST}} \
               -e MAIL_PORT=${{secrets.MAIL_PORT}} \
               -e SERVER_PORT=8080 \
-              ${{ secrets.DOCKER_USERNAME }}/sycls-admin-api:latest
+              ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}:latest
