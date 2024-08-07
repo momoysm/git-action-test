@@ -87,6 +87,7 @@ jobs:
           MAIL_PORT: ${{ secrets.MAIL_PORT }}
           SERVER_PORT: 8080
 
+      #  sudo docker run -d --${{secrets.DOCKER_USERNAME}}/sycls-admin-api:latest
       - name: SSH to EC2 and deploy admin-api
         uses: appleboy/ssh-action@master
         with:
@@ -95,6 +96,4 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/sycls-admin-api:latest
-#            sudo docker run -d --${{secrets.DOCKER_USERNAME}}/sycls-admin-api:latest
             sudo docker run -d -p 8080:8080 --env-file .env ${{ secrets.DOCKER_USERNAME }}/sycls-admin-api:latest
-            
