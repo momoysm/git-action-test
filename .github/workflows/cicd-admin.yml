@@ -82,4 +82,4 @@ jobs:
               -e MAIL_HOST=${{secrets.MAIL_HOST}} \
               -e MAIL_PORT=${{secrets.MAIL_PORT}} \
               -e SERVER_PORT=8080 \
-            ${{secrets.DOCKER_USERNAME}}/sycls-admin-api:latest
+              ${{ secrets.DOCKER_USERNAME }}/sycls-admin-api:latest
