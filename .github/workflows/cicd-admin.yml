@@ -62,7 +62,7 @@ jobs:
               sudo docker stop $CONTAINER_ID
               sudo docker rm $CONTAINER_ID
             fi
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/sycls-admin-api:latest
+            sudo docker pull --platform linux/amd64 ${{ secrets.DOCKER_USERNAME }}/sycls-admin-api:latest
             sudo docker run -d -p 8080:8080\
             -e DOCKER_USERNAME=${{secrets.DOCKER_USERNAME}}\
             -e AWS_ACCESS_KEY=${{secrets.AWS_ACCESS_KEY}}\
