@@ -153,8 +153,7 @@ public class AuthRestController {
      * Health check
      */
     @GetMapping("/health")
-    public ResponseEntity<RestApiResponseDto<String>> healthCheck() {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(RestApiResponseDto.of("Health Check."));
+    public ResponseEntity<Void> healthCheck() {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
