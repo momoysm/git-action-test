@@ -87,7 +87,7 @@ jobs:
       # deploy files upload to S3
       - name: upload to S3
         run: |
-          zip -r sycls-admin-latest.zip ./scripts appspec.yml
+          zip -r sycls-admin-latest.zip ./scripts ./appspec.yml
           aws s3 cp --region ${{ secrets.AWS_REGION }} --acl private ./sycls-admin-latest.zip s3://${{ secrets.AWS_BUCKET_NAME }}/scripts/
 
       - name: start deploy
