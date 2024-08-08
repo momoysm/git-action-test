@@ -1,6 +1,6 @@
 name: CD
 
-# main 브랜치 PR 발생 시 실행
+# main 브랜치 PR 발생 시 실행 t
 on:
   push:
     branches:
