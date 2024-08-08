@@ -18,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -148,5 +147,13 @@ public class AuthRestController {
         authService.refreshToken(request, response);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(RestApiResponseDto.of("토큰이 성공적으로 재발급 됐습니다."));
+    }
+
+    /**
+     * Health check
+     */
+    @GetMapping("/health")
+    public ResponseEntity<Void> healthCheck() {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

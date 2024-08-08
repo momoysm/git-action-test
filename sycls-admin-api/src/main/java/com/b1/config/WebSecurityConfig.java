@@ -93,6 +93,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/static/**").permitAll()
                         .requestMatchers("/templates/**").permitAll()
                         .requestMatchers("/static/css/**").permitAll()
+                        .requestMatchers("/v1/health").permitAll()
                         .requestMatchers("/v1/users/signup").permitAll()
                         .requestMatchers("/v1/auth/login").permitAll()
                         .requestMatchers("/v1/auth/token").permitAll()
