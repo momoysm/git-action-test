@@ -6,9 +6,6 @@ on:
     branches:
       - feat/git-action-teset
 
-env:
-  ECR_URL: ${{secrets.ECR_URL}}
-
 jobs:
   build-docker:
     runs-on: ubuntu-latest #runs-on으로 변경 test
@@ -34,7 +31,7 @@ jobs:
 
       # Docker Image 생성
       - name: Docker build
-        run: docker build . --platform linux/amd64 -f sycls-admin-api/Dockerfile -t ${{ env.ECR_URL }}:latest
+        run: docker build . --platform linux/amd64 -f sycls-admin-api/Dockerfile -t ${{secrets.ECR_URL}}:latest
 
       # AWS CLI 설치
       - name: AWS-CLI setup
@@ -61,13 +58,13 @@ jobs:
       - name: AWS ECR upload and setting deploy files
         id: build-image
         run: |
-          aws ecr get-login-password --region ${{secrets.AWS_REGION}} | docker login --username AWS --password-stdin ${{ env.ECR_URL }}
-          docker push ${{ env.ECR_URL }}:latest 
-          echo "image= ${{ env.ECR_URL }}:latest" >> $GITHUB_OUTPUT
+          aws ecr get-login-password --region ${{secrets.AWS_REGION}} | docker login --username AWS --password-stdin ${{secrets.ECR_URL}}
+          docker push ${{secrets.ECR_URL}}:latest 
+          echo "image= ${{secrets.ECR_URL}}:latest" >> $GITHUB_OUTPUT
           mkdir scripts
           touch scripts/deploy.sh
-          echo "aws ecr get-login-password --region ${{ secrets.AWS_REGION}} | docker login --username AWS --password-stdin ${{ env.ECR_URL }}" >> scripts/deploy.sh
-          echo "docker pull ${{ env.ECR_URL }}:latest" >> scripts/deploy.sh
+          echo "aws ecr get-login-password --region ${{ secrets.AWS_REGION}} | docker login --username AWS --password-stdin ${{secrets.ECR_URL}}" >> scripts/deploy.sh
+          echo "docker pull ${{secrets.ECR_URL}}:latest" >> scripts/deploy.sh
           echo "docker run -d -p 8081:8081 \
                 -e AWS_ACCESS_KEY=${{secrets.AWS_ACCESS_KEY}} \
                 -e AWS_SECRET_KEY=${{secrets.AWS_SECRET_KEY}} \
@@ -85,7 +82,7 @@ jobs:
                 -e MAIL_HOST=${{secrets.MAIL_HOST}} \
                 -e MAIL_PORT=${{secrets.MAIL_PORT}} \
                 -e SERVER_PORT=${{secrets.SERVER_PORT}} \
-                --restart always --name sylcs-admin ${{ env.ECR_URL }}:latest" >> scripts/deploy.sh
+                --restart always --name sylcs-admin ${{secrets.ECR_URL}}:latest" >> scripts/deploy.sh
 
       # deploy files upload to S3
       - name: upload to S3
