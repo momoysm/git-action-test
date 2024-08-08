@@ -34,10 +34,10 @@ jobs:
 
       # Docker Image 생성
       - name: Docker build
-        run: docker build . --platform linux/amd64 -f docker/Dockerfile -t ${{ env.ECR_URL }}:latest
+        run: docker build . --platform linux/amd64 -f sycls-admin-api/Dockerfile -t ${{ env.ECR_URL }}:latest
 
       # AWS CLI 설치
-      - name: AWS-cli setup
+      - name: AWS-CLI setup
         run: |
           sudo apt install unzip
           sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
