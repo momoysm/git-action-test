@@ -44,7 +44,7 @@ jobs:
           sudo unzip awscliv2.zip
           sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
 
-      # AWS 연결 설정
+      # AWS 연결 설정1
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
