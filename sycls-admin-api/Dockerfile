@@ -8,7 +8,7 @@ CMD ["./gradlew", "clean", "build"]
 WORKDIR /app
 
 # Copy the JAR file
-COPY build/libs/sycls-admin-api-0.0.1-SNAPSHOT.jar app.jar
+COPY sycls-admin-api/build/libs/sycls-admin-api-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose the port
 EXPOSE 8081
