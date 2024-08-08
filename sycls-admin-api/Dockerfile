@@ -1,5 +1,8 @@
 # Base image
-FROM openjdk:17-jdk-slim
+FROM openjdk:17-jre-slim
+
+# Gradle을 사용해 빌드를 실행하는 명령어
+CMD ["./gradlew", "clean", "build"]
 
 # Set the working directory
 WORKDIR /app
