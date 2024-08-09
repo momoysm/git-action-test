@@ -83,8 +83,7 @@ jobs:
                 -e MAIL_HOST=${{secrets.MAIL_HOST}} \
                 -e MAIL_PORT=${{secrets.MAIL_PORT}} \
                 -e SERVER_PORT=${{secrets.SERVER_PORT}} \
-                --restart always \
-                --name sylcs-admin ${{secrets.ECR_URL}}:latest" >> scripts/deploy.sh
+                --restart always --name sylcs-admin ${{secrets.ECR_URL}}:latest" >> scripts/deploy.sh
 
       # deploy files upload to S3
       - name: upload to S3
