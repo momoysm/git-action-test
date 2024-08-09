@@ -14,4 +14,4 @@ COPY sycls-admin-api/build/libs/sycls-admin-api-0.0.1-SNAPSHOT.jar /apps/app.jar
 EXPOSE 8081
 
 # Run the application
-ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-jar", "/apps/app.jar"]
+ENTRYPOINT ["java", "-jar", "/apps/app.jar"]
