@@ -5,13 +5,13 @@ FROM openjdk:17-jdk-slim
 CMD ["./gradlew", "clean", "build"]
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /apps
 
 # Copy the JAR file
-COPY sycls-admin-api/build/libs/sycls-admin-api-0.0.1-SNAPSHOT.jar app.jar
+COPY sycls-admin-api/build/libs/sycls-admin-api-0.0.1-SNAPSHOT.jar /apps/app.jar
 
 # Expose the port
 EXPOSE 8081
 
 # Run the application
-ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-jar", "/apps/app.jar"]
